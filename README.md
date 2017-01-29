@@ -50,7 +50,7 @@ Here `{employee-id}` is the ID of the employee.
 
 #### `/employee/{employee-id}/logs/{month-id}`
 
-Here `{employee-id}` is the ID of the employee and {month-id} is the ID of the month.
+Here `{employee-id}` is the ID of the employee and `{month-id}` is the ID of the month.
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ### Employee URIs (for the mobile application)
