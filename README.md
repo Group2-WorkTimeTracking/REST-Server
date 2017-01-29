@@ -2,98 +2,98 @@
 
 ## URIs
 
-##### `worktime-tracking.herokuapp.com/login`
+#### `/login`
 
 * Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object, *including the userkey that is required for every other API paths*.
 
 ### Employer URIs (for the web client)
 
-##### `worktime-tracking.herokuapp.com/account`
+#### `/account`
 
 * Submit a **GET** request to this URI to get account details. This will return an account object.
 * Submit a **PUT** request to this URI to modify account details. In the body of the request, include an account object. If the request is successful, the server will return an account object.
 
-##### `worktime-tracking.herokuapp.com/employee`
+#### `/employee`
 
 * Submit a **GET** request to this URI to get the list of employee. This will return an array of account object.
 * Submit a **POST** request to this URI to create a new employee. In the body of the request, include an account object. If the request is successful, the server will return an account object.
 
-##### `worktime-tracking.herokuapp.com/employee/{employee-id}`
+#### `/employee/{employee-id}`
 
 Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get employee details. This will return an account object.
 * Submit a **PUT** request to this URI to modify employee details. In the body of the request, include an account object. If the request is successful, the server will return an account object.
 * Submit a **DELETE** request to this URI to delete an employee. If the request is successful, the server will return an HTTP `204` (`No Content`) status.
 
-##### `worktime-tracking.herokuapp.com/location`
+#### `/location`
 
 * Submit a **GET** request to this URI to get the list of workplace. This will return an array of location object.
 * Submit a **POST** request to this URI to create a new workplace. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 
-##### `worktime-tracking.herokuapp.com/location/{location-id}`
+#### `/location/{location-id}`
 
 Here `{location-id}` is the ID of the work place.
 * Submit a **GET** request to this URI to get a work place. This will return a location object.
 * Submit a **PUT** request to this URI to modify a work place. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 * Submit a **DELETE** request to this URI to delete a location. If the request is successful, the server will return an HTTP `204` (`No Content`) status.
 
-##### `worktime-tracking.herokuapp.com/employee/{employee-id}/location`
+#### `/employee/{employee-id}/location`
 
 Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get the employee workplace. This will return a location object.
 * Submit a **PUT** request to this URI to modify employee workplace. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 
-##### `worktime-tracking.herokuapp.com/employee/{employee-id}/logs`
+#### `/employee/{employee-id}/logs`
 
 Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object.
 
-##### `worktime-tracking.herokuapp.com/employee/{employee-id}/logs/{month-id}`
+#### `/employee/{employee-id}/logs/{month-id}`
 
 Here `{employee-id}` is the ID of the employee and {month-id} is the ID of the month.
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ### Employee URIs (for the mobile application)
 
-##### `worktime-tracking.herokuapp.com/account`
+#### `/account`
 
 * Submit a **GET** request to this URI to get account details. This will return an account object.
 * Submit a **PUT** request to this URI to modify account details. In the body of the request, include an account object. If the request is successful, the server will return an account object.
 
-##### `worktime-tracking.herokuapp.com/account/location`
+#### `/account/location`
 
 * Submit a **GET** request to this URI to get the employee workplace. This will return a location object.
 
-##### `worktime-tracking.herokuapp.com/work/start`
+#### `/work/start`
 
 * Submit a **POST** request to this URI to start counting work time. In the body of the request, include a start timetag object. If the request is successful, the server will return a timetag object.
 
-##### `worktime-tracking.herokuapp.com/work/finish`
+#### `/work/finish`
 
 * Submit a **POST** request to this URI to stop counting work time. In the body of the request, include the stop timetag object. If the request is successful, the server will return a timetag object.
 
-##### `worktime-tracking.herokuapp.com/work/note`
+#### `/work/note`
 
 * Submit a **POST** request to this URI to make a note. In the body of the request, include a note object. If the request is successful, the server will return a note object.
 
-##### `worktime-tracking.herokuapp.com/account/logs`
+#### `/account/logs`
 
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object.
 
-##### `worktime-tracking.herokuapp.com/account/logs/{month}`
+#### `/account/logs/{month}`
 
 Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ## JSON Objects
 
-##### Account
+#### Account
 
 ```json
 {...}
 ```
 
-##### Location
+#### Location
 
 ```json
 {
@@ -104,7 +104,7 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 }
 ```
 
-##### Logs
+#### Logs
 
 ```json
 {
@@ -126,12 +126,12 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
             "working-hours": 0.0,
             "note": "I have a meeting in Helsinki."
         },
-            ...
+        ...
     ]
 }
 ```
 
-##### Timetag
+#### Timetag
 
 ```json
 {
@@ -141,7 +141,7 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 }
 ```
 
-##### Note
+#### Note
 
 ```json
 {
