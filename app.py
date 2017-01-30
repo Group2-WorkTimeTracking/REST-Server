@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 o_account = """{...}"""
 
-o_location = """"data": {
+o_location = """{
     "place-name": "OAMK, Kotkantie campus",
     "coordinate": {"latitude": 64.99958,
                    "longitude": 25.51078},
@@ -82,7 +82,7 @@ def employee_account_by_id(employee_id):
 @app.route('/location', methods=['GET', 'POST'])
 def location():
     if request.method == 'GET':
-        return '[{}]'.format(o_location)
+        return '{}'.format(o_location)
     else:
         return o_location
 
