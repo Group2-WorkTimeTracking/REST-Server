@@ -82,7 +82,7 @@ def employee_account_by_id(employee_id):
 @app.route('/location', methods=['GET', 'POST'])
 def location():
     if request.method == 'GET':
-        return '\[{}\]'.format(o_location)
+        return '[{}]'.format(o_location)
     else:
         return o_location
 
