@@ -64,7 +64,7 @@ def account():
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_account():
     if request.method == 'GET':
-        return '\[{}\]'.format(o_account)
+        return '[{}]'.format(o_account)
     else:
         return o_account
 
@@ -111,7 +111,7 @@ def employee_logs(employee_id):
 
 
 @app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
-def employee_logs_per_month(month_id):
+def employee_logs_per_month(employee_id, month_id):
     return o_logs
 
 
