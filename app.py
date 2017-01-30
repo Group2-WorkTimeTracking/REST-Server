@@ -6,7 +6,7 @@ app = Flask(__name__)
 o_account = """{...}"""
 
 o_location = """{
-    "placename": "OAMK, Kotkantie campus",
+    "placeName": "OAMK, Kotkantie campus",
     "coordinate": {"latitude": 64.99958,
                    "longitude": 25.51078},
     "size": 0.00220
