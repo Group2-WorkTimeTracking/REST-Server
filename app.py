@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
@@ -46,6 +46,11 @@ o_note = """{
     "day-of-effectiveness": "2017-01-22",
     "user-id": 42
 }"""
+
+
+@app.route('/')
+def index():
+    return redirect('/login', code=301)
 
 
 @app.route('/login', methods=['POST'])
@@ -128,6 +133,7 @@ def start():
 @app.route('/work/finish', methods=['POST'])
 def finish():
     return o_timetag
+
 
 @app.route('/work/note', methods=['POST'])
 def note():
