@@ -48,9 +48,9 @@ Here `{employee-id}` is the ID of the employee.
 Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object.
 
-#### `/employee/{employee-id}/logs/{month-id}`
+#### `/employee/{employee-id}/logs/{month}`
 
-Here `{employee-id}` is the ID of the employee and `{month-id}` is the ID of the month.
+Here `{employee-id}` is the ID of the employee and `{month}` is the month on the ISO 8601 format (e.g. `2017-01`).
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ### Employee URIs (for the mobile application)
@@ -90,14 +90,19 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 #### Account
 
 ```json
-{...}
+{
+    "realName": "J. Random User",
+    "login": "jrandom",
+    "role": "employer",
+    "key": "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad"
+}
 ```
 
 #### Location
 
 ```json
 {
-    "place-name": "OAMK, Kotkantie campus",
+    "placeName": "OAMK, Kotkantie campus",
     "coordinate": {"latitude": 64.99958,
                    "longitude": 25.51078},
     "size": 0.00220
@@ -109,24 +114,23 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 ```json
 {
     "month": "2016-12",
-    "total-working-hours": 142.1,
-    "daily-work": [
+    "totalWorkingHours": 142.1,
+    "dailyWork": [
         {
             "day": "2016-12-01",
-            "working-hours": 7.9,
+            "workingHours": 7.9,
             "note": ""
         },
         {
             "day": "2016-12-02",
-            "working-hours": 8.3,
+            "workingHours": 8.3,
             "note": ""
         },
         {
             "day": "2016-12-05",
-            "working-hours": 0.0,
+            "workingHours": 0.0,
             "note": "I have a meeting in Helsinki."
-        },
-        ...
+        }
     ]
 }
 ```
@@ -136,8 +140,8 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 ```json
 {
     "type": "start",
-    "timestamp": 1485096644, // POSIX time
-    "user-id": 42
+    "timestamp": 1485096644,
+    "userId": 42
 }
 ```
 
@@ -146,7 +150,7 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 ```json
 {
     "message": "I won’t be present because of a meeting in Helsinki.",
-    "day-of-effectiveness": "2017-01-22",
-    "user-id": 42
+    "dayOfEffectiveness": "2017-01-22",
+    "userId": 42
 }
 ```
