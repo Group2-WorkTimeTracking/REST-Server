@@ -9,6 +9,15 @@ class Location:
         self.size = size
 
 
+    @classmethod
+    def from_json(cls, data):
+        obj = json.loads(data)
+        return cls(obj['placeName'],
+                   obj['coordinate']['latitude'],
+                   obj['coordinate']['longitude'],
+                   obj['size'])
+
+
     def __repr__(self):
         return json.dumps({
             'placeName': self.place_name,

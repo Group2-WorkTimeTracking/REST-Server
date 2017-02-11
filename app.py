@@ -8,7 +8,7 @@ from Log import *
 app = Flask(__name__)
 
 
-acc = """{...}"""
+acc = "{...}"
 
 loc = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
 
@@ -34,11 +34,6 @@ lgs = """{
         ...
     ]
 }"""
-
-timetag = TimeTag('start', 1485096644, 42)
-
-msg = Note("I won't be present because of a meeting in Helsinki.",
-    '2017-01-22', 42)
 
 
 @app.route('/')
@@ -81,8 +76,14 @@ def employee_account_by_id(employee_id):
 def location():
     if request.method == 'GET':
         return repr(loc)
+
     else:
-        return repr(loc)
+        try:
+            locat = Location.from_json(request.data.decode())
+        except:
+            return '', 400
+
+        return repr(locat)
 
 
 @app.route('/location/<int:location_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -120,16 +121,31 @@ def account_location():
 
 @app.route('/work/start', methods=['POST'])
 def start():
+    try:
+        timetag = TimeTag.from_json(request.data.decode(), 'start')
+    except:
+        return '', 400
+
     return repr(timetag)
 
 
 @app.route('/work/finish', methods=['POST'])
 def finish():
+    try:
+        timetag = TimeTag.from_json(request.data.decode(), 'stop')
+    except:
+        return '', 400
+
     return repr(timetag)
 
 
 @app.route('/work/note', methods=['POST'])
 def note():
+    try:
+        msg = Note.from_json(request.data.decode())
+    except:
+        return '', 400
+
     return repr(msg)
 
 

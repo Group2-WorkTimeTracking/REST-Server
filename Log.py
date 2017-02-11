@@ -8,11 +8,17 @@ class TimeTag:
         self.user_id = user_id
 
 
+    @classmethod
+    def from_json(cls, data, kind):
+        obj = json.loads(data)
+        return cls(kind, obj['timestamp'], obj['userId'])
+
+
     def __repr__(self):
         return json.dumps({
-            "type": self.tag_type,
-            "timestamp": self.timestamp,
-            "userId": self.user_id
+            'type': self.tag_type,
+            'timestamp': self.timestamp,
+            'userId': self.user_id
         })
 
 
@@ -25,9 +31,15 @@ class Note:
         self.user_id = user_id
 
 
+    @classmethod
+    def from_json(cls, data):
+        obj = json.loads(data)
+        return cls(obj['message'], obj['dayOfEffectiveness'], obj['userId'])
+
+
     def __repr__(self):
         return json.dumps({
-            "message": self.message,
-            "day-of-effectiveness": self.effectivness,
-            "userId": self.user_id
+            'message': self.message,
+            'day-of-effectiveness': self.effectivness,
+            'userId': self.user_id
         })
