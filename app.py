@@ -2,7 +2,8 @@ import os
 from flask import Flask, request, redirect
 
 from Location import *
-from Log import *
+from Note import *
+from TimeTag import *
 
 
 app = Flask(__name__)
