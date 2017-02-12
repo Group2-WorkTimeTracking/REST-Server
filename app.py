@@ -1,12 +1,19 @@
 import os
 from flask import Flask, request, redirect
 
-from Location import *
+from models.db import db
+from models.account import Account
+from models.location import Location
+# from models.employee import Employee
+# from models.employer import Employer
+
 from Note import *
 from TimeTag import *
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db.init_app(app)
 
 
 acc = "{...}"
@@ -161,4 +168,6 @@ def logs_per_month(month_id):
 
 
 if __name__ == '__main__':
+    # db.drop_all()
+    # db.create_all()
     app.run(host='0.0.0.0', port=os.environ['PORT'])
