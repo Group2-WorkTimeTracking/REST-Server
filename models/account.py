@@ -14,5 +14,6 @@ class Account(db.Model):
         self.password = enc_pw(password)
         self.real_name = name
 
-    def enc_pw(password):
-        return hashlib.sha3_512(password.encode()).hexdigest()
+
+def enc_pw(password):
+    return hashlib.sha3_512(password.encode()).hexdigest()

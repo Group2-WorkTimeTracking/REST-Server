@@ -10,6 +10,8 @@ class Location(db.Model):
     longitude = db.Column(db.Float)
     size_loc = db.Column(db.Float)
 
+    id_usr = db.Column(db.Integer, db.ForeignKey('user.id_usr'))
+
     @classmethod
     def from_json(cls, data):
         obj = json.loads(data)

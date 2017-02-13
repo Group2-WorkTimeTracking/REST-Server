@@ -4,8 +4,8 @@ from flask import Flask, request, redirect
 from models.db import db
 from models.account import Account
 from models.location import Location
-# from models.employee import Employee
-# from models.employer import Employer
+from models.employee import Employee
+from models.user import User
 
 from Note import *
 from TimeTag import *
@@ -15,8 +15,12 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
-acc = "{...}"
+
+acc = User('jrandom', 'aStrongPassword', 'J. Random User')
 
 loc = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
 
@@ -51,31 +55,31 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return acc
+    return repr(acc)
 
 
 @app.route('/account', methods=['GET', 'PUT'])
 def account():
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     else:
-        return acc
+        return repr(acc)
 
 
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_account():
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     else:
-        return acc
+        return repr(acc)
 
 
 @app.route('/employee/<int:employee_id>', methods=['GET', 'PUT', 'DELETE'])
 def employee_account_by_id(employee_id):
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     elif request.method == 'PUT':
-        return acc
+        return repr(acc)
     else:
         return '', 204
 
@@ -168,6 +172,4 @@ def logs_per_month(month_id):
 
 
 if __name__ == '__main__':
-    # db.drop_all()
-    # db.create_all()
     app.run(host='0.0.0.0', port=os.environ['PORT'])
