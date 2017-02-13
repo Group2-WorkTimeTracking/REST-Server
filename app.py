@@ -1,14 +1,26 @@
 import os
 from flask import Flask, request, redirect
 
-from Location import *
-from Log import *
+from models.db import db
+from models.account import Account
+from models.location import Location
+from models.employee import Employee
+from models.user import User
+
+from Note import *
+from TimeTag import *
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db.init_app(app)
+
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
 
-acc = """{...}"""
+acc = User('jrandom', 'aStrongPassword', 'J. Random User')
 
 loc = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
 
@@ -35,11 +47,6 @@ lgs = """{
     ]
 }"""
 
-timetag = TimeTag('start', 1485096644, 42)
-
-msg = Note("I won't be present because of a meeting in Helsinki.",
-    '2017-01-22', 42)
-
 
 @app.route('/')
 def index():
@@ -48,31 +55,31 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return acc
+    return repr(acc)
 
 
 @app.route('/account', methods=['GET', 'PUT'])
 def account():
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     else:
-        return acc
+        return repr(acc)
 
 
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_account():
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     else:
-        return acc
+        return repr(acc)
 
 
 @app.route('/employee/<int:employee_id>', methods=['GET', 'PUT', 'DELETE'])
 def employee_account_by_id(employee_id):
     if request.method == 'GET':
-        return acc
+        return repr(acc)
     elif request.method == 'PUT':
-        return acc
+        return repr(acc)
     else:
         return '', 204
 
@@ -81,8 +88,14 @@ def employee_account_by_id(employee_id):
 def location():
     if request.method == 'GET':
         return repr(loc)
+
     else:
-        return repr(loc)
+        try:
+            locat = Location.from_json(request.data.decode())
+        except:
+            return '', 400
+
+        return repr(locat)
 
 
 @app.route('/location/<int:location_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -120,16 +133,31 @@ def account_location():
 
 @app.route('/work/start', methods=['POST'])
 def start():
+    try:
+        timetag = TimeTag.from_json(request.data.decode(), 'start')
+    except:
+        return '', 400
+
     return repr(timetag)
 
 
 @app.route('/work/finish', methods=['POST'])
 def finish():
+    try:
+        timetag = TimeTag.from_json(request.data.decode(), 'stop')
+    except:
+        return '', 400
+
     return repr(timetag)
 
 
 @app.route('/work/note', methods=['POST'])
 def note():
+    try:
+        msg = Note.from_json(request.data.decode())
+    except:
+        return '', 400
+
     return repr(msg)
 
 

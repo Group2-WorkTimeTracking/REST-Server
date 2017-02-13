@@ -149,7 +149,7 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 
 ```json
 {
-    "message": "I won’t be present because of a meeting in Helsinki.",
+    "message": "I won't be present because of a meeting in Helsinki.",
     "dayOfEffectiveness": "2017-01-22",
     "userId": 42
 }
