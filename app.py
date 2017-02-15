@@ -3,12 +3,11 @@ from flask import Flask, request, redirect
 
 from models.db import db
 from models.account import Account
-from models.location import Location
 from models.employee import Employee
-from models.user import User
-
-from Note import *
+from models.location import Location
+from models.note import Note
 from TimeTag import *
+from models.user import User
 
 
 app = Flask(__name__)

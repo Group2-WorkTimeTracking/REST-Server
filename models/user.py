@@ -5,9 +5,10 @@ from models.account import Account
 
 
 class User(db.Model):
-    id_usr= db.Column(db.Integer, primary_key=True)
+    id_usr = db.Column(db.Integer, primary_key=True)
     id_acc = db.Column(db.Integer, db.ForeignKey('account.id_acc'))
-    account = db.relationship('Account')
+
+    account = db.relationship('Account', uselist=False)
     employees = db.relationship('Employee')
     places = db.relationship('Location')
 
