@@ -1,10 +1,10 @@
-# Work time tracking API
+# Work time tracking API `https://worktime-tracking.herokuapp.com/`
 
 ## URIs
 
 #### `/login`
 
-**NOT IMPLEMENTED** 
+**NOT IMPLEMENTED**
 * Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object.
 
 ### Employer URIs (for the web client)
@@ -83,7 +83,7 @@ Here `{employee-id}` is the ID of the employee and `{month}` is the month on the
 
 #### `/account/logs/{month}`
 
-Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
+Here `{month-id}` is the month on the ISO 8601 format (e.g. `2017-01`).
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ## JSON Objects

@@ -42,8 +42,7 @@ lgs = """{
             "day": "2016-12-05",
             "workingHours": 0.0,
             "note": "I have a meeting in Helsinki."
-        },
-        ...
+        }
     ]
 }"""
 
