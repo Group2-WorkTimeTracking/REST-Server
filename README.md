@@ -2,9 +2,9 @@
 
 ## URIs
 
-#### `/login`
+#### `/login` **NOT IMPLEMENTED**
 
-* **NOT IMPLEMENTED** Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object.
+* Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object.
 
 ### Employer URIs (for the web client)
 
