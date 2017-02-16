@@ -1,6 +1,6 @@
-# Work time tracking API `https://worktime-tracking.herokuapp.com/`
+# Work time tracking API
 
-## URIs
+## URIs [`https://worktime-tracking.herokuapp.com/`](https://worktime-tracking.herokuapp.com/)
 
 #### `/login`
 
