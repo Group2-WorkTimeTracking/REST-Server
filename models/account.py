@@ -7,7 +7,7 @@ class Account(db.Model):
     id_acc = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(128))
-    real_name = db.Column(db.String(80))
+    real_name = db.Column(db.String(255))
 
     def __init__(self, login, password, name):
         self.login = login

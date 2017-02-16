@@ -18,9 +18,16 @@ class Employee(db.Model):
         self.account = Account(login, password, name)
         self.id_loc = id_loc
 
-    def __repr__(self):
-        return json.dumps({
+    @property
+    def json(self):
+        return {
             'realName': self.account.real_name,
             'login': self.account.login,
             'role': 'employee'
-        })
+        }
+
+
+    @classmethod
+    def json(cls, data):
+        obj = json.loads(data)
+        return cls(obj['login'], obj['password'], obj['realName'], 0)

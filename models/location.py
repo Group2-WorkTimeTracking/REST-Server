@@ -12,24 +12,26 @@ class Location(db.Model):
 
     id_usr = db.Column(db.Integer, db.ForeignKey('user.id_usr'))
 
-    @classmethod
-    def from_json(cls, data):
-        obj = json.loads(data)
-        return cls(obj['placeName'],
-                   obj['coordinate']['latitude'],
-                   obj['coordinate']['longitude'],
-                   obj['size'])
-
     def __init__(self, name, lat, lon, size):
         self.name_loc = name
         self.latitude = lat
         self.longitude = lon
         self.size_loc = size
 
-    def __repr__(self):
-        return json.dumps({
+    @property
+    def json(self):
+        return {
             'placeName': self.name_loc,
             'coordinate': {'latitude': self.latitude,
                            'longitude': self.longitude},
             'size': self.size_loc
-        })
+        }
+
+
+    @classmethod
+    def json(cls, data):
+        obj = json.loads(data)
+        return cls(obj['placeName'],
+                   obj['coordinate']['latitude'],
+                   obj['coordinate']['longitude'],
+                   obj['size'])

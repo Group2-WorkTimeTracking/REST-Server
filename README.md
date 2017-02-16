@@ -4,7 +4,7 @@
 
 #### `/login`
 
-* Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object, *including the userkey that is required for every other API paths*.
+* **NOT IMPLEMENTED** Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object.
 
 ### Employer URIs (for the web client)
 
@@ -93,8 +93,8 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 {
     "realName": "J. Random User",
     "login": "jrandom",
-    "role": "employer",
-    "key": "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad"
+    "password": "aStrongPassword",
+    "role": "employer"
 }
 ```
 

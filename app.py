@@ -1,3 +1,4 @@
+import json
 import os
 from flask import Flask, request, redirect
 
@@ -6,7 +7,7 @@ from models.account import Account
 from models.employee import Employee
 from models.location import Location
 from models.note import Note
-from TimeTag import *
+from models.timetag import TimeTag
 from models.user import User
 
 
@@ -133,17 +134,17 @@ def account_location():
 @app.route('/work/start', methods=['POST'])
 def start():
     try:
-        timetag = TimeTag.from_json(request.data.decode(), 'start')
+        timetag = TimeTag.from_json(request.data.decode(), True)
     except:
         return '', 400
 
-    return repr(timetag)
+    return json.dumps(timetag.json)
 
 
 @app.route('/work/finish', methods=['POST'])
 def finish():
     try:
-        timetag = TimeTag.from_json(request.data.decode(), 'stop')
+        timetag = TimeTag.from_json(request.data.decode(), False)
     except:
         return '', 400
 
@@ -157,7 +158,7 @@ def note():
     except:
         return '', 400
 
-    return repr(msg)
+    return json.dumps(msg.json)
 
 
 @app.route('/account/logs', methods=['GET'])

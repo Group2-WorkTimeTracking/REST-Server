@@ -1,5 +1,3 @@
-import json
-
 from models.db import db
 from models.account import Account
 
@@ -14,12 +12,13 @@ class User(db.Model):
 
     def __init__(self, login, password, name):
         self.account = Account(login, password, name)
-        # self.employees = []
-        # self.places = []
+        self.employees = []
+        self.places = []
 
-    def __repr__(self):
-        return json.dumps({
+    @property
+    def json(self):
+        return {
             'realName': self.account.real_name,
             'login': self.account.login,
             'role': 'employer'
-        })
+        }
