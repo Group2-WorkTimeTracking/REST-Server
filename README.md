@@ -2,7 +2,7 @@
 
 ## URIs
 
-#### `/login` **NOT IMPLEMENTED**
+#### **NOT IMPLEMENTED** `/login` 
 
 * Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object.
 
