@@ -19,7 +19,7 @@ class Location(db.Model):
         self.size_loc = size
 
     @property
-    def json(self):
+    def to_dict(self):
         return {
             'placeName': self.name_loc,
             'coordinate': {'latitude': self.latitude,
@@ -29,9 +29,66 @@ class Location(db.Model):
 
 
     @classmethod
-    def json(cls, data):
+    def from_json(cls, data):
         obj = json.loads(data)
         return cls(obj['placeName'],
                    obj['coordinate']['latitude'],
                    obj['coordinate']['longitude'],
                    obj['size'])
+
+
+    @classmethod
+    def browse(cls):
+        # try:
+        objs = []
+        for obj in cls.query.all():
+            objs.append(obj.to_dict)
+        return json.dumps(objs)
+        # except:
+        #     return '', 400
+
+
+    @classmethod
+    def read(cls, id_param):
+        # try:
+        obj = cls.query.get(id_param)
+        return json.dumps(obj.to_dict)
+        # except:
+        #     return '', 400
+
+
+    @classmethod
+    def edit(cls, id_param, data):
+        # try:
+        obj = cls.query.get(id_param)
+        new = json.loads(data)
+
+        if new['coordinate']['latitude']:
+            obj.latitude = new['coordinate']['latitude']
+
+        db.session.commit()
+        return json.dumps(obj.to_dict)
+        # except:
+        #     return '', 400
+
+
+    @classmethod
+    def add(cls, data):
+        # try:
+        obj = cls.from_json(data)
+        db.session.add(obj)
+        db.session.commit()
+        return json.dumps(obj.to_dict)
+        # except:
+        #     return '', 400
+
+
+    @classmethod
+    def delete(cls, id_param):
+        # try:
+        obj = cls.query.get(id_param)
+        db.session.delete(obj)
+        db.session.commit()
+        return '', 204
+        # except:
+        #     return '', 400

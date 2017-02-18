@@ -141,7 +141,7 @@ Here `{month-id}` is the month on the ISO 8601 format (e.g. `2017-01`).
 ```json
 {
     "type": "start",
-    "timestamp": 1485096644,
+    "timestamp": "2017-02-16T16:25:15",
     "userId": 42
 }
 ```

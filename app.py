@@ -20,9 +20,9 @@ with app.app_context():
     db.create_all()
 
 
-acc = User('jrandom', 'aStrongPassword', 'J. Random User')
+emp = Employee('whitegoose652', 'enter1', 'Konsta Heikkinen', 0)
 
-loc = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
+campus = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
 
 lgs = """{
     "month": "2016-12",
@@ -54,15 +54,15 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return repr(acc)
+    return 501
 
 
 @app.route('/account', methods=['GET', 'PUT'])
 def account():
     if request.method == 'GET':
-        return repr(acc)
+        return User.read(1)
     else:
-        return repr(acc)
+        return User.edit(1, request.data)
 
 
 @app.route('/employee', methods=['GET', 'POST'])
@@ -86,25 +86,19 @@ def employee_account_by_id(employee_id):
 @app.route('/location', methods=['GET', 'POST'])
 def location():
     if request.method == 'GET':
-        return repr(loc)
-
+        return Location.browse()
     else:
-        try:
-            locat = Location.from_json(request.data.decode())
-        except:
-            return '', 400
-
-        return repr(locat)
+        return Location.add(request.data)
 
 
 @app.route('/location/<int:location_id>', methods=['GET', 'PUT', 'DELETE'])
 def location_by_id(location_id):
     if request.method == 'GET':
-        return repr(loc)
+        return Location.read(location_id)
     elif request.method == 'PUT':
-        return repr(loc)
+        return Location.edit(location_id, request.data)
     else:
-        return '', 204
+        return Location.delete(location_id)
 
 
 @app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
@@ -152,12 +146,7 @@ def finish():
 
 @app.route('/work/note', methods=['POST'])
 def note():
-    try:
-        msg = Note.from_json(request.data.decode())
-    except:
-        return '', 400
-
-    return json.dumps(msg.json)
+    return Note.add_note(request.data)
 
 
 @app.route('/account/logs', methods=['GET'])
