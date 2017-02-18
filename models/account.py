@@ -11,8 +11,16 @@ class Account(db.Model):
 
     def __init__(self, login, password, name):
         self.login = login
-        self.password = enc_pw(password)
+        self.passwd = password
         self.real_name = name
+
+    @property
+    def passwd(self):
+        return ''
+
+    @passwd.setter
+    def passwd(self, value):
+        self.password = enc_pw(value)
 
 
 def enc_pw(password):

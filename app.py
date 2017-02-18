@@ -20,10 +20,6 @@ with app.app_context():
     db.create_all()
 
 
-emp = Employee('whitegoose652', 'enter1', 'Konsta Heikkinen', 0)
-
-campus = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
-
 lgs = """{
     "month": "2016-12",
     "totalWorkingHours": 142.1,
@@ -68,19 +64,19 @@ def account():
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_account():
     if request.method == 'GET':
-        return repr(acc)
+        return Employee.browse()
     else:
-        return repr(acc)
+        return Employee.add(request.data)
 
 
 @app.route('/employee/<int:employee_id>', methods=['GET', 'PUT', 'DELETE'])
 def employee_account_by_id(employee_id):
     if request.method == 'GET':
-        return repr(acc)
+        return Employee.read(employee_id)
     elif request.method == 'PUT':
-        return repr(acc)
+        return Employee.edit(employee_id, request.data)
     else:
-        return '', 204
+        return Employee.delete(employee_id)
 
 
 @app.route('/location', methods=['GET', 'POST'])
@@ -101,62 +97,52 @@ def location_by_id(location_id):
         return Location.delete(location_id)
 
 
-@app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
-def employee_location(employee_id):
-    if request.method == 'GET':
-        return repr(loc)
-    elif request.method == 'PUT':
-        return repr(loc)
-
-
-@app.route('/employee/<int:employee_id>/logs', methods=['GET'])
-def employee_logs(employee_id):
-    return lgs
-
-
-@app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
-def employee_logs_per_month(employee_id, month_id):
-    return lgs
-
-
-@app.route('/account/location', methods=['GET'])
-def account_location():
-    return repr(loc)
-
-
+# @app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
+# def employee_location(employee_id):
+#     if request.method == 'GET':
+#         return repr(loc)
+#     elif request.method == 'PUT':
+#         return repr(loc)
+#
+#
+# @app.route('/employee/<int:employee_id>/logs', methods=['GET'])
+# def employee_logs(employee_id):
+#     return lgs
+#
+#
+# @app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
+# def employee_logs_per_month(employee_id, month_id):
+#     return lgs
+#
+#
+# @app.route('/account/location', methods=['GET'])
+# def account_location():
+#     return repr(loc)
+#
+#
 @app.route('/work/start', methods=['POST'])
 def start():
-    try:
-        timetag = TimeTag.from_json(request.data.decode(), True)
-    except:
-        return '', 400
-
-    return json.dumps(timetag.json)
+    return TimeTag.add(request.data, True)
 
 
 @app.route('/work/finish', methods=['POST'])
 def finish():
-    try:
-        timetag = TimeTag.from_json(request.data.decode(), False)
-    except:
-        return '', 400
-
-    return repr(timetag)
+    return TimeTag.add(request.data, False)
 
 
 @app.route('/work/note', methods=['POST'])
 def note():
-    return Note.add_note(request.data)
+    return Note.add(request.data)
 
 
-@app.route('/account/logs', methods=['GET'])
-def logs():
-    return lgs
-
-
-@app.route('/account/logs/<int:month_id>', methods=['GET'])
-def logs_per_month(month_id):
-    return lgs
+# @app.route('/account/logs', methods=['GET'])
+# def logs():
+#     return lgs
+#
+#
+# @app.route('/account/logs/<int:month_id>', methods=['GET'])
+# def logs_per_month(month_id):
+#     return lgs
 
 
 if __name__ == '__main__':

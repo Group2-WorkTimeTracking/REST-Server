@@ -21,6 +21,7 @@ class Location(db.Model):
     @property
     def to_dict(self):
         return {
+            'locationId': self.id_loc,
             'placeName': self.name_loc,
             'coordinate': {'latitude': self.latitude,
                            'longitude': self.longitude},
@@ -45,7 +46,7 @@ class Location(db.Model):
             objs.append(obj.to_dict)
         return json.dumps(objs)
         # except:
-        #     return '', 400
+        #     return '', 500
 
 
     @classmethod
@@ -54,7 +55,7 @@ class Location(db.Model):
         obj = cls.query.get(id_param)
         return json.dumps(obj.to_dict)
         # except:
-        #     return '', 400
+        #     return '', 404
 
 
     @classmethod
@@ -63,8 +64,18 @@ class Location(db.Model):
         obj = cls.query.get(id_param)
         new = json.loads(data)
 
-        if new['coordinate']['latitude']:
-            obj.latitude = new['coordinate']['latitude']
+        if 'placeName' in new:
+            obj.name_loc = new['placeName']
+
+        if 'coordinate' in new:
+            if 'latitude' in new['coordinate']:
+                obj.latitude = new['coordinate']['latitude']
+
+            if 'longitude' in new['coordinate']:
+                obj.longitude = new['coordinate']['longitude']
+
+        if 'size' in new:
+            obj.size_loc = new['size']
 
         db.session.commit()
         return json.dumps(obj.to_dict)
@@ -91,4 +102,4 @@ class Location(db.Model):
         db.session.commit()
         return '', 204
         # except:
-        #     return '', 400
+        #     return '', 500

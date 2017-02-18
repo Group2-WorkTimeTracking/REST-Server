@@ -14,13 +14,15 @@ class Employee(db.Model):
 
     id_usr = db.Column(db.Integer, db.ForeignKey('user.id_usr'))
 
-    def __init__(self, login, password, name, id_loc):
+    def __init__(self, login, password, name, id_usr, id_loc):
         self.account = Account(login, password, name)
+        self.id_usr = id_usr
         self.id_loc = id_loc
 
     @property
     def to_dict(self):
         return {
+            'userId': self.id_emp,
             'realName': self.account.real_name,
             'login': self.account.login,
             'role': 'employee'
@@ -30,18 +32,18 @@ class Employee(db.Model):
     @classmethod
     def from_json(cls, data):
         obj = json.loads(data)
-        return cls(obj['login'], obj['password'], obj['realName'], 0)
+        return cls(obj['login'], obj['password'], obj['realName'], 1, 1)
 
 
     @classmethod
     def browse(cls):
         # try:
         objs = []
-        for obj in cls.query.all():
+        for obj in cls.query.filter_by(id_usr=1).all():
             objs.append(obj.to_dict)
         return json.dumps(objs)
         # except:
-        #     return '', 400
+        #     return '', 500
 
 
     @classmethod
@@ -50,7 +52,7 @@ class Employee(db.Model):
         obj = cls.query.get(id_param)
         return json.dumps(obj.to_dict)
         # except:
-        #     return '', 400
+        #     return '', 404
 
 
     @classmethod
@@ -59,8 +61,14 @@ class Employee(db.Model):
         obj = cls.query.get(id_param)
         new = json.loads(data)
 
-        if new['coordinate']['latitude']:
-            obj.latitude = new['coordinate']['latitude']
+        if 'login' in new:
+            obj.account.login = new['login']
+
+        if 'password' in new:
+            obj.account.passwd = new['password']
+
+        if 'realName' in new:
+            obj.account.real_name = new['realName']
 
         db.session.commit()
         return json.dumps(obj.to_dict)
@@ -87,4 +95,4 @@ class Employee(db.Model):
         db.session.commit()
         return '', 204
         # except:
-        #     return '', 400
+        #     return '', 500

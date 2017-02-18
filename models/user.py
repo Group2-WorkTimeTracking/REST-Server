@@ -27,23 +27,12 @@ class User(db.Model):
 
 
     @classmethod
-    def browse(cls):
-        # try:
-        objs = []
-        for obj in cls.query.all():
-            objs.append(obj.to_dict)
-        return json.dumps(objs)
-        # except:
-        #     return '', 400
-
-
-    @classmethod
     def read(cls, id_param):
         # try:
         obj = cls.query.get(id_param)
         return json.dumps(obj.to_dict)
         # except:
-        #     return '', 400
+        #     return '', 404
 
 
     @classmethod
@@ -52,32 +41,16 @@ class User(db.Model):
         obj = cls.query.get(id_param)
         new = json.loads(data)
 
-        if new['coordinate']['latitude']:
-            obj.latitude = new['coordinate']['latitude']
+        if 'login' in new:
+            obj.account.login = new['login']
+
+        if 'password' in new:
+            obj.account.passwd = new['password']
+
+        if 'realName' in new:
+            obj.account.real_name = new['realName']
 
         db.session.commit()
         return json.dumps(obj.to_dict)
-        # except:
-        #     return '', 400
-
-
-    @classmethod
-    def add(cls, data):
-        # try:
-        obj = cls.from_json(data)
-        db.session.add(obj)
-        db.session.commit()
-        return json.dumps(obj.to_dict)
-        # except:
-        #     return '', 400
-
-
-    @classmethod
-    def delete(cls, id_param):
-        # try:
-        obj = cls.query.get(id_param)
-        db.session.delete(obj)
-        db.session.commit()
-        return '', 204
         # except:
         #     return '', 400
