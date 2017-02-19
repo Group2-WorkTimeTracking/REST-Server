@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, redirect
+from flask_cors import CORS
 
 from models.db import db
 from models.account import Account
@@ -12,6 +13,8 @@ from TimeTag import *
 
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
