@@ -38,11 +38,11 @@ Here `{location-id}` is the ID of the work place.
 * Submit a **PUT** request to this URI to modify a work place. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 * Submit a **DELETE** request to this URI to delete a location. If the request is successful, the server will return an HTTP `204` (`No Content`) status.
 
-<!-- #### `/employee/{employee-id}/location`
+#### `/employee/{employee-id}/location`
 
 Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get the employee workplace. This will return a location object.
-* Submit a **PUT** request to this URI to modify employee workplace. In the body of the request, include a location object. If the request is successful, the server will return a location object. -->
+* Submit a **PUT** request to this URI to modify employee workplace. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 
 <!-- #### `/employee/{employee-id}/logs`
 
@@ -61,9 +61,9 @@ Here `{employee-id}` is the ID of the employee and `{month}` is the month on the
 * Submit a **GET** request to this URI to get account details. This will return an account object.
 * Submit a **PUT** request to this URI to modify account details. In the body of the request, include an account object. If the request is successful, the server will return an account object. -->
 
-<!-- #### `/account/location`
+#### `/account/location`
 
-* Submit a **GET** request to this URI to get the employee workplace. This will return a location object. -->
+* Submit a **GET** request to this URI to get the employee workplace. This will return a location object.
 
 #### `/work/start`
 

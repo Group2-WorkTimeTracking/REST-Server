@@ -5,11 +5,11 @@ from flask_cors import CORS
 
 from models.db import db
 from models.account import Account
-from models.employee import Employee
+from models.user import User
 from models.location import Location
+from models.employee import Employee
 from models.note import Note
 from models.timetag import TimeTag
-from models.user import User
 
 
 app = Flask(__name__)
@@ -100,14 +100,14 @@ def location_by_id(location_id):
         return Location.delete(location_id)
 
 
-# @app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
-# def employee_location(employee_id):
-#     if request.method == 'GET':
-#         return repr(loc)
-#     elif request.method == 'PUT':
-#         return repr(loc)
-#
-#
+@app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
+def employee_location(employee_id):
+    if request.method == 'GET':
+        return Employee.get_location(employee_id)
+    else:
+        return Employee.set_location(employee_id, request.data)
+
+
 # @app.route('/employee/<int:employee_id>/logs', methods=['GET'])
 # def employee_logs(employee_id):
 #     return lgs
@@ -116,13 +116,13 @@ def location_by_id(location_id):
 # @app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
 # def employee_logs_per_month(employee_id, month_id):
 #     return lgs
-#
-#
-# @app.route('/account/location', methods=['GET'])
-# def account_location():
-#     return repr(loc)
-#
-#
+
+
+@app.route('/account/location', methods=['GET'])
+def account_location():
+    return Employee.get_location(1)
+
+
 @app.route('/work/start', methods=['POST'])
 def start():
     return TimeTag.add(request.data, True)

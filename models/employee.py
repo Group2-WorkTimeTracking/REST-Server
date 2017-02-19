@@ -10,6 +10,7 @@ class Employee(db.Model):
     id_loc = db.Column(db.Integer, db.ForeignKey('location.id_loc'))
 
     account = db.relationship('Account', uselist=False)
+    location = db.relationship('Location', uselist=False)
     # logs = #something
 
     id_usr = db.Column(db.Integer, db.ForeignKey('user.id_usr'))
@@ -94,5 +95,29 @@ class Employee(db.Model):
         db.session.delete(obj)
         db.session.commit()
         return '', 204
+        # except:
+        #     return '', 500
+
+
+    @classmethod
+    def get_location(cls, id_param):
+        # try:
+        obj = cls.query.get(id_param)
+        return json.dumps(obj.location.to_dict)
+        # except:
+        #     return '', 500
+
+
+    @classmethod
+    def set_location(cls, id_param, data):
+        # try:
+        obj = cls.query.get(id_param)
+        json_data = json.loads(data)
+
+        if 'locationId' in json_data:
+            obj.id_loc = json_data['locationId']
+
+        db.session.commit()
+        return json.dumps(obj.location.to_dict)
         # except:
         #     return '', 500
