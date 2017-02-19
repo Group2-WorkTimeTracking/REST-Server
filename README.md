@@ -44,15 +44,15 @@ Here `{employee-id}` is the ID of the employee.
 * Submit a **GET** request to this URI to get the employee workplace. This will return a location object.
 * Submit a **PUT** request to this URI to modify employee workplace. In the body of the request, include a location object. If the request is successful, the server will return a location object.
 
-<!-- #### `/employee/{employee-id}/logs`
+#### `/employee/{employee-id}/logs`
 
 Here `{employee-id}` is the ID of the employee.
-* Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object. -->
+* Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object.
 
-<!-- #### `/employee/{employee-id}/logs/{month}`
+#### `/employee/{employee-id}/logs/{month}`
 
 Here `{employee-id}` is the ID of the employee and `{month}` is the month on the ISO 8601 format (e.g. `2017-01`).
-* Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object. -->
+* Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ### Employee URIs (for the mobile application)
 
@@ -77,14 +77,14 @@ Here `{employee-id}` is the ID of the employee and `{month}` is the month on the
 
 * Submit a **POST** request to this URI to make a note. In the body of the request, include a note object. If the request is successful, the server will return a note object.
 
-<!-- #### `/account/logs`
+#### `/account/logs`
 
-* Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object. -->
+* Submit a **GET** request to this URI to get the day-per-day work time of the employee for the current month. This will return a logs object.
 
-<!-- #### `/account/logs/{month}`
+#### `/account/logs/{month}`
 
 Here `{month-id}` is the month on the ISO 8601 format (e.g. `2017-01`).
-* Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object. -->
+* Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ## JSON Objects
 

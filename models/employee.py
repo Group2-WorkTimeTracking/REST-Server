@@ -1,7 +1,10 @@
 import json
+from datetime import *
 
 from models.db import db
 from models.account import Account
+from models.note import Note
+from models.timetag import TimeTag
 
 
 class Employee(db.Model):
@@ -11,7 +14,6 @@ class Employee(db.Model):
 
     account = db.relationship('Account', uselist=False)
     location = db.relationship('Location', uselist=False)
-    # logs = #something
 
     id_usr = db.Column(db.Integer, db.ForeignKey('user.id_usr'))
 
@@ -119,5 +121,52 @@ class Employee(db.Model):
 
         db.session.commit()
         return json.dumps(obj.location.to_dict)
+        # except:
+        #     return '', 500
+
+
+    @classmethod
+    def get_log(cls, id_param, pmonth=datetime.strftime(datetime.today(), '%Y-%m')):
+        # try:
+        month = datetime.strptime(pmonth, '%Y-%m')
+        obj = {
+            'month': datetime.strftime(month, '%Y-%m'),
+            'totalWorkingHours': 0,
+            'dailyWork': []
+        }
+
+        for nday in range(31):
+            try:
+                today = datetime(month.year, month.month, nday + 1)
+
+                day = {
+                    'day': datetime.strftime(today, '%Y-%m-%d'),
+                    'workingHours': .0,
+                    'note': ''
+                }
+
+                for x in Note.query.filter_by(id_emp=id_param).all():
+                    if x.day_of_effectiveness.year == today.year and\
+                            x.day_of_effectiveness.month == today.month and\
+                            x.day_of_effectiveness.day == today.day:
+                        day['note'] = x.message
+
+                for y in TimeTag.query.filter_by(id_emp=id_param).all():
+                    if y.timestamp.year == today.year and\
+                            y.timestamp.month == today.month and\
+                            y.timestamp.day == today.day:
+                        if y.is_start:
+                            day['workingHours'] -= (y.timestamp.timestamp() - today.timestamp())
+                        else:
+                            day['workingHours'] += (y.timestamp.timestamp() - today.timestamp())
+
+                if day['workingHours'] != 0 or day['note'] != '':
+                    day['workingHours'] /= 3600
+                    obj['totalWorkingHours'] += day['workingHours']
+                    obj['dailyWork'].append(day)
+            except ValueError:
+                pass
+
+        return json.dumps(obj)
         # except:
         #     return '', 500

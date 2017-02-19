@@ -108,14 +108,14 @@ def employee_location(employee_id):
         return Employee.set_location(employee_id, request.data)
 
 
-# @app.route('/employee/<int:employee_id>/logs', methods=['GET'])
-# def employee_logs(employee_id):
-#     return lgs
-#
-#
-# @app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
-# def employee_logs_per_month(employee_id, month_id):
-#     return lgs
+@app.route('/employee/<int:employee_id>/logs', methods=['GET'])
+def employee_logs(employee_id):
+    return Employee.get_log(employee_id)
+
+
+@app.route('/employee/<int:employee_id>/logs/<month>', methods=['GET'])
+def employee_logs_per_month(employee_id, month):
+    return Employee.get_log(employee_id, month)
 
 
 @app.route('/account/location', methods=['GET'])
@@ -138,14 +138,14 @@ def note():
     return Note.add(request.data)
 
 
-# @app.route('/account/logs', methods=['GET'])
-# def logs():
-#     return lgs
-#
-#
-# @app.route('/account/logs/<int:month_id>', methods=['GET'])
-# def logs_per_month(month_id):
-#     return lgs
+@app.route('/account/logs', methods=['GET'])
+def logs():
+    return Employee.get_log(1)
+
+
+@app.route('/account/logs/<month>', methods=['GET'])
+def logs_per_month(month):
+    return Employee.get_log(1, month)
 
 
 if __name__ == '__main__':
