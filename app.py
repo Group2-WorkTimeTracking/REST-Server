@@ -1,15 +1,15 @@
+import json
 import os
 from flask import Flask, request, redirect
 from flask_cors import CORS
 
 from models.db import db
 from models.account import Account
+from models.user import User
 from models.location import Location
 from models.employee import Employee
-from models.user import User
-
-from Note import *
-from TimeTag import *
+from models.note import Note
+from models.timetag import TimeTag
 
 
 app = Flask(__name__)
@@ -22,10 +22,6 @@ with app.app_context():
     # db.drop_all()
     db.create_all()
 
-
-acc = User('jrandom', 'aStrongPassword', 'J. Random User')
-
-loc = Location('OAMK, Kotkantie campus', 64.99958, 25.51078, 0.00220)
 
 lgs = """{
     "month": "2016-12",
@@ -45,8 +41,7 @@ lgs = """{
             "day": "2016-12-05",
             "workingHours": 0.0,
             "note": "I have a meeting in Helsinki."
-        },
-        ...
+        }
     ]
 }"""
 
@@ -58,120 +53,99 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return repr(acc)
+    return 501
 
 
 @app.route('/account', methods=['GET', 'PUT'])
 def account():
     if request.method == 'GET':
-        return repr(acc)
+        return User.read(1)
     else:
-        return repr(acc)
+        return User.edit(1, request.data)
 
 
 @app.route('/employee', methods=['GET', 'POST'])
 def employee_account():
     if request.method == 'GET':
-        return repr(acc)
+        return Employee.browse()
     else:
-        return repr(acc)
+        return Employee.add(request.data)
 
 
 @app.route('/employee/<int:employee_id>', methods=['GET', 'PUT', 'DELETE'])
 def employee_account_by_id(employee_id):
     if request.method == 'GET':
-        return repr(acc)
+        return Employee.read(employee_id)
     elif request.method == 'PUT':
-        return repr(acc)
+        return Employee.edit(employee_id, request.data)
     else:
-        return '', 204
+        return Employee.delete(employee_id)
 
 
 @app.route('/location', methods=['GET', 'POST'])
 def location():
     if request.method == 'GET':
-        return repr(loc)
-
+        return Location.browse()
     else:
-        try:
-            locat = Location.from_json(request.data.decode())
-        except:
-            return '', 400
-
-        return repr(locat)
+        return Location.add(request.data)
 
 
 @app.route('/location/<int:location_id>', methods=['GET', 'PUT', 'DELETE'])
 def location_by_id(location_id):
     if request.method == 'GET':
-        return repr(loc)
+        return Location.read(location_id)
     elif request.method == 'PUT':
-        return repr(loc)
+        return Location.edit(location_id, request.data)
     else:
-        return '', 204
+        return Location.delete(location_id)
 
 
 @app.route('/employee/<int:employee_id>/location', methods=['GET', 'PUT'])
 def employee_location(employee_id):
     if request.method == 'GET':
-        return repr(loc)
-    elif request.method == 'PUT':
-        return repr(loc)
+        return Employee.get_location(employee_id)
+    else:
+        return Employee.set_location(employee_id, request.data)
 
 
 @app.route('/employee/<int:employee_id>/logs', methods=['GET'])
 def employee_logs(employee_id):
-    return lgs
+    return Employee.get_log(employee_id)
 
 
-@app.route('/employee/<int:employee_id>/logs/<int:month_id>', methods=['GET'])
-def employee_logs_per_month(employee_id, month_id):
-    return lgs
+@app.route('/employee/<int:employee_id>/logs/<month>', methods=['GET'])
+def employee_logs_per_month(employee_id, month):
+    return Employee.get_log(employee_id, month)
 
 
 @app.route('/account/location', methods=['GET'])
 def account_location():
-    return repr(loc)
+    return Employee.get_location(1)
 
 
 @app.route('/work/start', methods=['POST'])
 def start():
-    try:
-        timetag = TimeTag.from_json(request.data.decode(), 'start')
-    except:
-        return '', 400
-
-    return repr(timetag)
+    return TimeTag.add(request.data, True)
 
 
 @app.route('/work/finish', methods=['POST'])
 def finish():
-    try:
-        timetag = TimeTag.from_json(request.data.decode(), 'stop')
-    except:
-        return '', 400
-
-    return repr(timetag)
+    return TimeTag.add(request.data, False)
 
 
 @app.route('/work/note', methods=['POST'])
 def note():
-    try:
-        msg = Note.from_json(request.data.decode())
-    except:
-        return '', 400
-
-    return repr(msg)
+    return Note.add(request.data)
 
 
 @app.route('/account/logs', methods=['GET'])
 def logs():
-    return lgs
+    return Employee.get_log(1)
 
 
-@app.route('/account/logs/<int:month_id>', methods=['GET'])
-def logs_per_month(month_id):
-    return lgs
+@app.route('/account/logs/<month>', methods=['GET'])
+def logs_per_month(month):
+    return Employee.get_log(1, month)
 
 
 if __name__ == '__main__':

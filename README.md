@@ -1,10 +1,11 @@
 # Work time tracking API
 
-## URIs
+## URIs [`https://worktime-tracking.herokuapp.com/`](https://worktime-tracking.herokuapp.com/)
 
-#### `/login`
+<!-- #### `/login`
 
-* Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object, *including the userkey that is required for every other API paths*.
+**NOT IMPLEMENTED**
+* Submit a **POST** request to this URI to authenticate through the API. If the request is successful, the server will return an account object. -->
 
 ### Employer URIs (for the web client)
 
@@ -55,10 +56,10 @@ Here `{employee-id}` is the ID of the employee and `{month}` is the month on the
 
 ### Employee URIs (for the mobile application)
 
-#### `/account`
+<!-- #### `/account`
 
 * Submit a **GET** request to this URI to get account details. This will return an account object.
-* Submit a **PUT** request to this URI to modify account details. In the body of the request, include an account object. If the request is successful, the server will return an account object.
+* Submit a **PUT** request to this URI to modify account details. In the body of the request, include an account object. If the request is successful, the server will return an account object. -->
 
 #### `/account/location`
 
@@ -82,7 +83,7 @@ Here `{employee-id}` is the ID of the employee and `{month}` is the month on the
 
 #### `/account/logs/{month}`
 
-Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
+Here `{month-id}` is the month on the ISO 8601 format (e.g. `2017-01`).
 * Submit a **GET** request to this URI to get the day-per-day work time of the employee for a month. This will return a logs object.
 
 ## JSON Objects
@@ -93,8 +94,8 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 {
     "realName": "J. Random User",
     "login": "jrandom",
-    "role": "employer",
-    "key": "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad"
+    "password": "aStrongPassword",
+    "role": "employer"
 }
 ```
 
@@ -140,7 +141,7 @@ Here `{month-id}` is the month on the ISO 8601 format (`2017-01`).
 ```json
 {
     "type": "start",
-    "timestamp": 1485096644,
+    "timestamp": "2017-02-16T16:25:15",
     "userId": 42
 }
 ```
